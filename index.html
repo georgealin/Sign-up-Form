@@ -3,10 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../Sign-up-Form/style.css">
+    <title>Sign Up Form</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="../Sign-up-Form/img/138791723_padded_logo.png">
 </head>
 <body>
-    
+    <div class="hero">
+        <div>
+            <img src="./img/White logo - no background.svg" alt="logo" width="70%">
+        </div>
+        <span class="referral">Photo by <a href=
+            "https://unsplash.com/@heytowner?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">
+            JOHN TOWNER</a> on <a href=
+            "https://unsplash.com/photos/d7y2-B0_TRU?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">
+            Unsplash</a></span>
+    </div>
+    <div id="right-side">
+    <form id="form" method="get">
+        <div class="header">
+            <p>This is not a real online service! You know you need something
+                like this in your life to help you realize your deepest dreams.
+            </p>
+            <p>    
+                Sign up <em>now</em> to get started!
+            </p>
+            <p>You <em>know</em> you want to.</p>
+        </div>
+        <div class="form">
+            <p>Let's do this!</p>
+        <fieldset>
+            <div class="input">
+            <label for="first_name">First Name</label>
+            <input type="text" id="first_name" name="first_name" required>
+            </div>
+            <div class="input">
+            <label for="last_name">Last Name</label>
+            <input type="text" id="last_name" name="last_name" required>
+            </div>
+            <div class="input">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input">
+            <label for="phone_number">Phone Number</label>
+            <input type="tel" id="phone_number" name="phone_number" required>
+            </div>
+            <div class="input">
+            <label for="password">Password</label>
+            <input type="password" 
+                id="password" 
+                name="password" 
+                autocomplete="current-password" 
+                minlength="8" 
+                maxlength="20" 
+                required
+                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\-\!@#$%^&*_+]).{8,20}$"
+                onkeyup="validate()"
+            >
+            <div id="check-box">
+                <label id="show_pass" for="show-password">Show Password</label>
+                <input type="checkbox" id="show-password" onclick="Toggle()">
+            </div>
+            <div id="validation-text"></div>
+            </div>
+            <div class="input">
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" 
+                id="confirm_password" 
+                name="confirm_password" 
+                autocomplete="current-password" 
+                required
+                onkeyup="confirm_pass()"
+                >
+            </div>
+        </fieldset>
+        </div>
+        <div class="footer">
+            <span id="wrong_password_alert"></span>
+            <button id="create_account" type="submit" onclick="wrong_password_alert(), confirm_pass()">Create Account</button>
+        </div>
+        </form>
+        <div class="last_footer">
+            <span>Already have an account?</span><button onclick="">Log in</button>
+        </div>
+    </div>
+    <script>
+
+        function validate() {
+            
+            var  validationField = document.getElementById('validation-text');
+            var  password= document.getElementById('password');
+
+            var content = password.value;
+            var  errors = [];
+            if (content.length < 8) {
+                errors.push("Your password must be at least 8 characters."); 
+            }
+            if (content.search(/[a-z]/i) < 0) {
+                errors.push("Your password must contain at least one letter.");
+            }
+            if (content.search(/[A-Z]/) < 0) {
+                errors.push("Your password must contain at least one capital letter.");
+            }
+            if (content.search(/[0-9]/i) < 0) {
+                errors.push("Your password must contain at least one digit."); 
+            }
+            if (content.search(/[-!@#$%^&*_+]/) < 0) {
+                errors.push("Your password must contain at least one special character.");
+            }
+            if (errors.length > 0) {
+                validationField.innerHTML = errors.join('');
+                document.getElementById('create_account').disabled = true;
+                document.getElementById('create_account').style.opacity = (0.6)
+                return false;
+            }
+            validationField.innerHTML = errors.join('');
+            document.getElementById('create_account').disabled = false;
+            document.getElementById('create_account').style.opacity = (1);
+            return true;
+        }
+
+        function confirm_pass() {
+ 
+            var password = document.getElementById('password').value;
+            var confirm_password = document.getElementById('confirm_password').value;
+            if (password != confirm_password) {
+                document.getElementById('wrong_password_alert').style.color = 'red';
+                document.getElementById('wrong_password_alert').innerHTML
+                    = '☒ Use same password';
+                document.getElementById('create_account').disabled = true;
+                document.getElementById('create_account').style.opacity = (0.6);
+            } else {
+                document.getElementById('wrong_password_alert').style.color = 'green';
+                document.getElementById('wrong_password_alert').innerHTML =
+                    '🗹 Password Matched';
+                document.getElementById('create_account').disabled = false;
+                document.getElementById('create_account').style.opacity = (1);
+            }  
+        }
+
+        function wrong_password_alert() {
+            if (document.getElementById('password').value != "" &&
+                document.getElementById('confirm_password').value != "") {
+                alert("Your response is submitted");
+            } else {
+                alert("Please fill all the fields");
+            }
+        }
+
+        function Toggle() {
+            let temp = document.getElementById("password");
+            let temp_confirm_pass = document.getElementById("confirm_password")
+             
+            if (temp.type === "password" || temp_confirm_pass === "confirm_password") {
+                temp.type = "text";
+                temp_confirm_pass.type = "text";
+            }
+            else {
+                temp.type = "password";
+                temp_confirm_pass.type = "password";
+            }
+        }
+    </script>
 </body>
 </html>
